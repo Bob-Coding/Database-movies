@@ -100,6 +100,7 @@ router.delete("/movies/:movieID", (req, res, next) => {
       res.send("/movies");
     });
 });
+
 // read all movies (the collections resource)
 router.get("/movies", (req, res) => {
   Movie.findAll().then(movies => {
