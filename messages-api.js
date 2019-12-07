@@ -11,7 +11,6 @@ app.post("/messages", (req, res) => {
   const message = req.body;
   const messageIsEmpty =
     Object.keys(message).length === 0 || message.text === "";
-
   if (messageIsEmpty) {
     return res.status(400).end();
   }

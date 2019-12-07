@@ -25,9 +25,6 @@ const Movie = db.define("movie", {
   }
 });
 
-// Truncate on start for testing
-// Movie.destroy({ truncate: true, cascade: false });
-
 // Make sure the model is synched with the database upon startup.
 // Use the model create() method to insert 3 rows of example data. This logic should happen after the model synchronization completes.
 db.sync()
@@ -105,6 +102,21 @@ router.delete("/movies/:movieID", (req, res, next) => {
 router.get("/movies", (req, res) => {
   Movie.findAll().then(movies => {
     res.send(movies);
+  });
+});
+
+// read all movies paginated(the collections resource)
+router.get("/movies-paginated", (req, res) => {
+  const limit = req.query.limit || 8;
+  const offset = req.query.offset || 0;
+  Movie.findAndCountAll({
+    limit,
+    offset
+  }).then(result => {
+    res.json({
+      data: result.rows,
+      total: result.count
+    });
   });
 });
 
